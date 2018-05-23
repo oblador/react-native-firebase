@@ -111,6 +111,20 @@ RCT_EXPORT_METHOD(getToken:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseR
     resolve([[FIRInstanceID instanceID] token]);
 }
 
+RCT_EXPORT_METHOD(deleteToken:(NSString *) authorizedEntity
+                  scope:(NSString *) scope
+                  resolve:(RCTPromiseResolveBlock) resolve
+                  reject:(RCTPromiseRejectBlock) reject) {
+    
+    [[FIRInstanceID instanceID] deleteTokenWithAuthorizedEntity:authorizedEntity scope:scope handler:^(NSError * _Nullable error) {
+        if (error != nil) {
+            reject(@"messaging/delete-token-error", @"Failed to delete token", error);
+        } else {
+            resolve(nil);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(requestPermission:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     if (RCTRunningInAppExtension()) {
         reject(@"messaging/request-permission-unavailable", @"requestPermission is not supported in App Extensions", nil);

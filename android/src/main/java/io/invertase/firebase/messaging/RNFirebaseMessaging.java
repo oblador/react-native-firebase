@@ -49,6 +49,12 @@ public class RNFirebaseMessaging extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void deleteToken(String authorizedEntity, String scope, Promise promise) {
+    FirebaseMessaging.getInstance().deleteToken(authorizedEntity, scope);
+    promise.resolve(null);
+  }
+
+  @ReactMethod
   public void requestPermission(Promise promise) {
     promise.resolve(null);
   }
